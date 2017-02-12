@@ -18,16 +18,16 @@ module.exports = {
       build: function(context) {
         var self = this;
         var options = {};
-        options.cwd = '../fluxproofofconcept';
+        options.cwd = '../deployable-react-app';
 
         return new Promise(function(resolve, reject) {
-          exec('npm run build', options, function(error, stdout, stderr) {
+          exec('PUBLIC_URL=https://s3.amazonaws.com/reactdeployer/react-deployer/ yarnpkg run build', options, function(error, stdout, stderr) {
             if (error) {
               reject();
               return;
             }
 
-            var files = glob.sync('**/**/*', {cwd: '../fluxproofofconcept/build'});
+            var files = glob.sync('**/**/*', {cwd: '../deployable-react-app/build'});
 
             if (files && files.length) {
               files.forEach(function(path) {
@@ -38,17 +38,19 @@ module.exports = {
             }
 
             resolve({
-              distDir: '../fluxproofofconcept/build',
+              distDir: '../deployable-react-app/build',
               distFiles: files
             });
           });
         }).then(function(results) {
-          exec('ls', options, function(error, stdout, stderr) {
-            if (error) {
-              reject();
-              return;
-            }
-            resolve(results);
+          return new Promise(function(resolve, reject) {
+            exec('ls', options, function(error, stdout, stderr) {
+              if (error) {
+                reject();
+                return;
+              }
+              resolve(results);
+            });
           });
         });
       }
