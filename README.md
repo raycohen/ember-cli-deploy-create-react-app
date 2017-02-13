@@ -16,11 +16,11 @@ In your create-react-app project's `config/deploy.js` file,
 module.exports = function(deployTarget) {
 	// ... other config ...
 
-	if (deployTarget === 'production') {
-		ENV['create-react-app'] = {
+  if (deployTarget === 'production') {
+    ENV['create-react-app'] = {
       publicURL: 'https://s3.amazonaws.com/your-bucket-name/your-app-name/'
     }
-	}
+  }
 
   return ENV;
 }
