@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-deploy-create-react-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Plugin to build a react app",
   "keywords": [
     "ember-addon",
