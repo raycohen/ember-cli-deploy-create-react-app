@@ -2,7 +2,7 @@
 'use strict';
 
 var DeployPluginBase = require('ember-cli-deploy-plugin');
-var Promise = require('ember-cli/lib/ext/promise');
+var RSVP = require('rsvp');
 var exec = require('child_process').exec;
 var glob = require('glob');
 var nodeModulesPath = require('node-modules-path');
@@ -67,7 +67,7 @@ module.exports = {
         var self = this;
         var options = {};
 
-        return new Promise(function(resolve, reject) {
+        return new RSVP.Promise(function(resolve, reject) {
           exec('PUBLIC_URL=' + self.readConfig('publicURL') + ' yarnpkg run build', options, function(error, stdout, stderr) {
             if (error) {
               reject();
@@ -90,7 +90,7 @@ module.exports = {
             });
           });
         }).then(function(results) {
-          return new Promise(function(resolve, reject) {
+          return new RSVP.Promise(function(resolve, reject) {
             exec('ls', options, function(error, stdout, stderr) {
               if (error) {
                 reject();
