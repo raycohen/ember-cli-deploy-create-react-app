@@ -70,7 +70,7 @@ module.exports = {
         return new RSVP.Promise(function(resolve, reject) {
           exec('PUBLIC_URL=' + self.readConfig('publicURL') + ' yarnpkg run build', options, function(error, stdout, stderr) {
             if (error) {
-              reject();
+              reject(error);
               return;
             }
 
