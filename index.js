@@ -68,7 +68,7 @@ module.exports = {
         var options = {};
 
         return new RSVP.Promise(function(resolve, reject) {
-          exec('PUBLIC_URL=' + self.readConfig('publicURL') + ' yarnpkg run build', options, function(error, stdout, stderr) {
+          const buildProcess = exec('PUBLIC_URL=' + self.readConfig('publicURL') + ' yarnpkg run build', options, function(error, stdout, stderr) {
             if (error) {
               reject(error);
               return;
@@ -89,17 +89,10 @@ module.exports = {
               distFiles: files
             });
           });
-        }).then(function(results) {
-          return new RSVP.Promise(function(resolve, reject) {
-            exec('ls', options, function(error, stdout, stderr) {
-              if (error) {
-                reject();
-                return;
-              }
-              resolve(results);
-            });
-          });
-        });
+
+          buildProcess.stdout.pipe(process.stdout);
+          buildProcess.stderr.pipe(process.stderr);
+        })
       }
     });
 
